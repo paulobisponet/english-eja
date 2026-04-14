@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English EJA – Prof. Paulo Bispo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── CSS Custom Properties ──────────────────────────────── */
+    :root {
+      --green-dark:   #1a5c2a;
+      --green:        #2a7a3b;
+      --green-mid:    #3a9e50;
+      --green-light:  #5cc274;
+      --green-pale:   #d4f5dc;
+      --gold:         #c9a227;
+      --gold-light:   #f0cc5a;
+      --white:        #ffffff;
+      --off-white:    #f5faf6;
+      --gray-light:   #e8f3ea;
+      --gray:         #8da895;
+      --text-dark:    #0f2d18;
+      --text-mid:     #2d5438;
+      --shadow-green: rgba(42,122,59,.25);
+      --radius-lg:    16px;
+      --radius-md:    10px;
+      --radius-sm:    6px;
+      --transition:   .22s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ── Reset & Base ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--off-white);
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    /* ── Header / Branding ──────────────────────────────────── */
+    header {
+      background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 60%, var(--green-mid) 100%);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 90% 50%, rgba(201,162,39,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 20%, rgba(255,255,255,.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* decorative circles */
+    header::after {
+      content: '';
+      position: absolute;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      border: 40px solid rgba(255,255,255,.04);
+      right: -80px; top: -80px;
+      pointer-events: none;
+    }
+
+    .header-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 28px 24px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Logo SVG area */
+    .logo-wrap {
+      flex-shrink: 0;
+      width: 72px; height: 72px;
+      background: rgba(255,255,255,.12);
+      border: 2px solid rgba(201,162,39,.6);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      animation: pulse-ring 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0%,100% { box-shadow: 0 0 0 0 rgba(201,162,39,.4); }
+      50%      { box-shadow: 0 0 0 10px rgba(201,162,39,.0); }
+    }
+
+    .logo-wrap svg { width: 44px; height: 44px; }
+
+    .header-text { flex: 1; }
+
+    .school-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .prof-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+    }
+
+    .prof-name span { color: var(--gold-light); }
+
+    .tagline {
+      font-size: 12px;
+      color: rgba(255,255,255,.7);
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    .header-badge {
+      flex-shrink: 0;
+      text-align: center;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(201,162,39,.4);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+    }
+
+    .header-badge .flag { font-size: 26px; line-height: 1; margin-bottom: 2px; }
+    .header-badge p { font-size: 10px; font-weight: 700; color: rgba(255,255,255,.8); letter-spacing: .05em; text-transform: uppercase; }
+
+    /* prefeitura strip */
+    .gov-strip {
+      background: var(--green-dark);
+      border-top: 1px solid rgba(201,162,39,.3);
+      text-align: center;
+      padding: 5px 16px;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--gold-light);
+      text-transform: uppercase;
+    }
+
+    /* ── Main Layout ────────────────────────────────────────── */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    /* ── Score Dashboard ────────────────────────────────────── */
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius-md);
+      padding: 12px 10px;
+      text-align: center;
+      transition: transform var(--transition);
+    }
+
+    .stat-card:hover { transform: translateY(-2px); }
+
+    .stat-card .stat-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 4px;
+    }
+
+    .stat-card .stat-val {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--green);
+    }
+
+    .stat-card.streak .stat-val { color: var(--gold); }
+
+    /* ── Mode Tabs ──────────────────────────────────────────── */
+    .mode-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .mode-tab {
+      flex: 1;
+      padding: 9px 6px;
+      border: 1.5px solid var(--green-light);
+      border-radius: var(--radius-md);
+      background: transparent;
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--green);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .mode-tab:hover { background: var(--green-pale); }
+
+    .mode-tab.active {
+      background: var(--green);
+      color: var(--white);
+      border-color: var(--green);
+      box-shadow: 0 4px 14px var(--shadow-green);
+    }
+
+    /* ── Progress Bar ───────────────────────────────────────── */
+    .progress-wrap {
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: var(--gray-light);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green-mid), var(--green-light));
+      border-radius: 99px;
+      transition: width .4s cubic-bezier(.4,0,.2,1);
+    }
+
+    .progress-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gray);
+      white-space: nowrap;
+    }
+
+    /* ── Question Card ──────────────────────────────────────── */
+    .question-card {
+      background: var(--white);
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      margin-bottom: 18px;
+      text-align: center;
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: box-shadow var(--transition);
+      box-shadow: 0 2px 12px rgba(42,122,59,.07);
+    }
+
+    .question-card.correct-anim { box-shadow: 0 0 0 3px var(--green-light); animation: pop .3s ease; }
+    .question-card.wrong-anim   { box-shadow: 0 0 0 3px #e24b4a; animation: shake .3s ease; }
+
+    @keyframes pop   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.03)} }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+    .q-chip {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      background: var(--green-pale);
+      border-radius: 99px;
+      padding: 3px 12px;
+      margin-bottom: 14px;
+    }
+
+    .color-swatch {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      border: 3px solid rgba(0,0,0,.08);
+      box-shadow: 0 4px 18px rgba(0,0,0,.15);
+      transition: transform var(--transition);
+    }
+
+    .color-swatch:hover { transform: scale(1.07); }
+
+    .big-number {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 68px;
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 8px var(--shadow-green);
+    }
+
+    .big-word {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--green-dark);
+      letter-spacing: -.02em;
+    }
+
+    .q-hint {
+      font-size: 13px;
+      color: var(--gray);
+      margin-top: 8px;
+    }
+
+    /* ── Options Grid ───────────────────────────────────────── */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .option-btn {
+      padding: 14px 12px;
+      border: 1.5px solid var(--gray-light);
+      border-radius: var(--radius-md);
+      background: var(--white);
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--green-mid);
+      background: var(--green-pale);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px var(--shadow-green);
+    }
+
+    .option-btn.correct {
+      background: #d4f5dc;
+      border-color: var(--green-mid);
+      color: var(--green-dark);
+      box-shadow: 0 0 0 3px rgba(92,194,116,.4);
+    }
+
+    .option-btn.wrong {
+      background: #fee2e2;
+      border-color: #e24b4a;
+      color: #7f1d1d;
+    }
+
+    .option-btn:disabled { cursor: default; transform: none !important; }
+
+    .opt-swatch {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 2px solid rgba(0,0,0,.1);
+      flex-shrink: 0;
+    }
+
+    /* ── Feedback ───────────────────────────────────────────── */
+    .feedback-row {
+      text-align: center;
+      min-height: 34px;
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      transition: all var(--transition);
+    }
+
+    .feedback-row.correct { color: var(--green-dark); }
+    .feedback-row.wrong   { color: #b91c1c; }
+
+    /* ── Next Button ────────────────────────────────────────── */
+    .next-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-mid) 100%);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      letter-spacing: .03em;
+      transition: all var(--transition);
+      box-shadow: 0 4px 18px var(--shadow-green);
+    }
+
+    .next-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--shadow-green);
+    }
+
+    .next-btn:active { transform: scale(.98); }
+
+    /* ── Result Screen ──────────────────────────────────────── */
+    .result-screen {
+      background: var(--white);
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius-lg);
+      padding: 36px 24px;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(42,122,59,.1);
+      animation: fadeUp .4s ease both;
+    }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+    .result-trophy { font-size: 56px; margin-bottom: 12px; animation: bounce 1s ease infinite alternate; }
+    @keyframes bounce { from{transform:translateY(0)} to{transform:translateY(-8px)} }
+
+    .result-screen h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--green-dark);
+      margin-bottom: 8px;
+    }
+
+    .result-score-big {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--green);
+      line-height: 1;
+      margin: 12px 0;
+    }
+
+    .result-score-big span { font-size: 24px; color: var(--gray); font-weight: 600; }
+
+    .star-row { font-size: 32px; letter-spacing: 6px; margin-bottom: 16px; }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 99px;
+      letter-spacing: .05em;
+    }
+
+    .badge.gold   { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+    .badge.green  { background: var(--green-pale); color: var(--green-dark); border: 1px solid var(--green-light); }
+    .badge.gray   { background: var(--gray-light); color: var(--text-mid); border: 1px solid #cde0d1; }
+
+    .result-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      flex: 1;
+      padding: 13px 10px;
+      background: linear-gradient(135deg, var(--green), var(--green-mid));
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: 0 4px 14px var(--shadow-green);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); }
+
+    .btn-outline {
+      flex: 1;
+      padding: 13px 10px;
+      background: transparent;
+      color: var(--green);
+      border: 1.5px solid var(--green-mid);
+      border-radius: var(--radius-md);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .btn-outline:hover { background: var(--green-pale); }
+
+    /* ── Particle canvas (background) ──────────────────────── */
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: .4;
+    }
+
+    /* keep content above canvas */
+    header, main { position: relative; z-index: 1; }
+
+    /* ── Footer ─────────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 16px;
+      font-size: 11px;
+      color: var(--gray);
+      border-top: 1px solid var(--gray-light);
+    }
+
+    footer strong { color: var(--green); }
+
+    /* ── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .header-inner { flex-wrap: wrap; }
+      .header-badge { display: none; }
+      .big-number { font-size: 52px; }
+      .big-word { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Subtle animated background -->
+<canvas id="particles-canvas"></canvas>
+
+<!-- ── HEADER ─────────────────────────────────────────────── -->
+<header>
+  <div class="header-inner">
+    <!-- Logo SVG (graduation cap + book + wifi) -->
+    <div class="logo-wrap">
+      <svg viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Book pages -->
+        <path d="M8 30 Q22 26 36 30 L36 14 Q22 10 8 14 Z" fill="rgba(255,255,255,.15)" stroke="#c9a227" stroke-width="1.2"/>
+        <path d="M22 27 L22 13" stroke="#c9a227" stroke-width="1"/>
+        <!-- Wifi signal in book -->
+        <path d="M17 22 Q22 19 27 22" stroke="#f0cc5a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+        <path d="M14 25 Q22 21 30 25" stroke="rgba(240,204,90,.5)" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+        <circle cx="22" cy="28" r="1.2" fill="#f0cc5a"/>
+        <!-- Cap -->
+        <path d="M22 6 L34 11 L22 16 L10 11 Z" fill="#c9a227"/>
+        <rect x="31" y="11" width="1.5" height="5" rx=".75" fill="#c9a227"/>
+        <circle cx="31.75" cy="17" r="1.5" fill="#f0cc5a"/>
+      </svg>
+    </div>
+
+    <div class="header-text">
+      <div class="school-name">E.M. Maria José Massena Matias</div>
+      <div class="prof-name">Prof. <span>Paulo Bispo</span></div>
+      <div class="tagline">Educar com propósito, inovar com paixão</div>
+    </div>
+
+    <div class="header-badge">
+      <div class="flag">🇺🇸</div>
+      <p>English<br>EJA</p>
+    </div>
+  </div>
+  <div class="gov-strip">Prefeitura Municipal de Água Preta &nbsp;·&nbsp; Ensinar para Transformar Vidas</div>
+</header>
+
+<!-- ── MAIN ───────────────────────────────────────────────── -->
+<main>
+
+  <!-- Dashboard -->
+  <div class="dashboard">
+    <div class="stat-card">
+      <div class="stat-label">Pontos</div>
+      <div class="stat-val" id="score-display">0</div>
+    </div>
+    <div class="stat-card streak">
+      <div class="stat-label">🔥 Sequência</div>
+      <div class="stat-val" id="streak-display">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Questão</div>
+      <div class="stat-val" id="qnum-display">1/10</div>
+    </div>
+  </div>
+
+  <!-- Mode tabs -->
+  <div class="mode-tabs">
+    <button class="mode-tab" id="tab-colors"  onclick="initGame('colors')">🎨 Cores</button>
+    <button class="mode-tab" id="tab-numbers" onclick="initGame('numbers')">🔢 Numerais</button>
+    <button class="mode-tab active" id="tab-mixed"   onclick="initGame('mixed')">🌀 Misto</button>
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress-wrap">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <div class="progress-label" id="progress-label">0%</div>
+  </div>
+
+  <!-- Game area -->
+  <div id="game-area"></div>
+
+</main>
+
+<footer>
+  Desenvolvido para &nbsp;<strong>Prof. Paulo Bispo</strong>&nbsp; · E.M. Maria José Massena Matias · Água Preta – PE
+</footer>
+
+<script>
+/* ── Data ─────────────────────────────────────────────────── */
+const COLORS = [
+  {en:"Red",    pt:"Vermelho", hex:"#E24B4A"},
+  {en:"Blue",   pt:"Azul",     hex:"#378ADD"},
+  {en:"Green",  pt:"Verde",    hex:"#3a9e50"},
+  {en:"Yellow", pt:"Amarelo",  hex:"#EF9F27"},
+  {en:"Orange", pt:"Laranja",  hex:"#D85A30"},
+  {en:"Purple", pt:"Roxo",     hex:"#7F77DD"},
+  {en:"Pink",   pt:"Rosa",     hex:"#D4537E"},
+  {en:"Black",  pt:"Preto",    hex:"#2C2C2A"},
+  {en:"White",  pt:"Branco",   hex:"#F5F5F5", border:true},
+  {en:"Brown",  pt:"Marrom",   hex:"#854F0B"},
+  {en:"Gray",   pt:"Cinza",    hex:"#888780"},
+];
+
+const NUMBERS = [
+  {num:1,  en:"One",         pt:"Um"},
+  {num:2,  en:"Two",         pt:"Dois"},
+  {num:3,  en:"Three",       pt:"Três"},
+  {num:4,  en:"Four",        pt:"Quatro"},
+  {num:5,  en:"Five",        pt:"Cinco"},
+  {num:6,  en:"Six",         pt:"Seis"},
+  {num:7,  en:"Seven",       pt:"Sete"},
+  {num:8,  en:"Eight",       pt:"Oito"},
+  {num:9,  en:"Nine",        pt:"Nove"},
+  {num:10, en:"Ten",         pt:"Dez"},
+  {num:11, en:"Eleven",      pt:"Onze"},
+  {num:12, en:"Twelve",      pt:"Doze"},
+  {num:13, en:"Thirteen",    pt:"Treze"},
+  {num:14, en:"Fourteen",    pt:"Quatorze"},
+  {num:15, en:"Fifteen",     pt:"Quinze"},
+  {num:20, en:"Twenty",      pt:"Vinte"},
+  {num:30, en:"Thirty",      pt:"Trinta"},
+  {num:40, en:"Forty",       pt:"Quarenta"},
+  {num:50, en:"Fifty",       pt:"Cinquenta"},
+  {num:100,en:"One hundred", pt:"Cem"},
+];
+
+const TOTAL_Q = 10;
+
+/* ── Helpers ──────────────────────────────────────────────── */
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function rnd(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+function pickWrong(pool, correct, count){ return shuffle(pool.filter(x=>x.en!==correct.en)).slice(0,count); }
+
+/* ── State ────────────────────────────────────────────────── */
+let G = { mode:'mixed', phase:'quiz', questions:[], current:0, score:0, streak:0, bestStreak:0, answered:null, chosen:null };
+
+/* ── Question Generator ───────────────────────────────────── */
+function makeQ(mode){
+  const isColor  = mode==='colors'  || (mode==='mixed' && Math.random()<.5);
+  const pool     = isColor ? COLORS : NUMBERS;
+  const types    = isColor ? ['swatch→en','en→swatch','pt→en'] : ['num→en','en→num','pt→en'];
+  const type     = rnd(types);
+  const correct  = rnd(pool);
+  const wrongs   = pickWrong(pool, correct, 3);
+  return { type, correct, options: shuffle([correct,...wrongs]), isColor };
+}
+
+function initGame(mode){
+  ['colors','numbers','mixed'].forEach(m=>{
+    document.getElementById('tab-'+m).classList.toggle('active', m===mode);
+  });
+  G = { mode, phase:'quiz', questions: Array.from({length:TOTAL_Q},()=>makeQ(mode)),
+        current:0, score:0, streak:0, bestStreak:0, answered:null, chosen:null };
+  render();
+}
+
+/* ── Render ───────────────────────────────────────────────── */
+function render(){
+  updateStats();
+  const area = document.getElementById('game-area');
+  if(G.phase==='result'){ area.innerHTML=renderResult(); return; }
+
+  const q = G.questions[G.current];
+  const progress = Math.round(((G.current+(G.answered!==null?1:0))/TOTAL_Q)*100);
+  document.getElementById('progress-fill').style.width = progress+'%';
+  document.getElementById('progress-label').textContent = progress+'%';
+  document.getElementById('qnum-display').textContent = (G.current+1)+'/'+TOTAL_Q;
+
+  area.innerHTML = `
+    <div class="question-card" id="q-card">${renderQBody(q)}</div>
+    <div class="options-grid">${q.options.map(o=>renderOpt(q,o)).join('')}</div>
+    <div class="feedback-row${G.answered!==null?' '+(G.answered?'correct':'wrong'):''}" id="feedback">
+      ${G.answered===null ? '' : G.answered
+        ? `✓ Correto!${G.streak>=2?' 🔥 Sequência '+G.streak+'!':''}`
+        : `✗ Resposta certa: <em>${q.correct.en}</em>`}
+    </div>
+    ${G.answered!==null ? `<button class="next-btn" onclick="next()">${G.current+1>=TOTAL_Q?'📊 Ver Resultado':'Próxima Questão →'}</button>` : ''}
+  `;
+}
+
+function updateStats(){
+  document.getElementById('score-display').textContent  = G.score;
+  document.getElementById('streak-display').textContent = G.streak;
+}
+
+function renderQBody(q){
+  const chip = `<div class="q-chip">${q.isColor?'🎨 Cores':'🔢 Numerais'}</div>`;
+  if(q.type==='swatch→en'){
+    const b = q.correct.border?'border:2px solid #ccc;':'';
+    return chip+`<div class="color-swatch" style="background:${q.correct.hex};${b}"></div><div class="q-hint">Qual é o nome dessa cor em inglês?</div>`;
+  }
+  if(q.type==='en→swatch'){
+    return chip+`<div class="big-word">${q.correct.en}</div><div class="q-hint">Escolha a cor correspondente</div>`;
+  }
+  if(q.type==='pt→en'){
+    return chip+`<div class="big-word">${q.correct.pt}</div><div class="q-hint">Traduza para inglês</div>`;
+  }
+  if(q.type==='num→en'){
+    return chip+`<div class="big-number">${q.correct.num}</div><div class="q-hint">Escreva em inglês</div>`;
+  }
+  if(q.type==='en→num'){
+    return chip+`<div class="big-word">${q.correct.en}</div><div class="q-hint">Escolha o número correto</div>`;
+  }
+  return chip;
+}
+
+function renderOpt(q,opt){
+  let cls='option-btn';
+  let dis='';
+  if(G.answered!==null){
+    dis='disabled';
+    if(opt.en===q.correct.en) cls+=' correct';
+    else if(G.chosen&&opt.en===G.chosen.en) cls+=' wrong';
+  }
+  let inner='';
+  if(q.type==='en→swatch'){
+    const b=opt.border?'border:2px solid #ccc;':'';
+    inner=`<span class="opt-swatch" style="background:${opt.hex};${b}"></span>${opt.en}`;
+  } else if(q.type==='en→num'){
+    inner=`${opt.num}`;
+  } else {
+    const showSwatch = q.isColor && q.type!=='pt→en';
+    inner=(showSwatch?`<span class="opt-swatch" style="background:${opt.hex};${opt.border?'border:2px solid #ccc;':''}"></span>`:``)
+          +`${opt.en}`;
+  }
+  const safeOpt = encodeURIComponent(JSON.stringify(opt));
+  return `<button class="${cls}" ${dis} onclick="answer('${safeOpt}')">${inner}</button>`;
+}
+
+function answer(safeOpt){
+  if(G.answered!==null) return;
+  const opt = JSON.parse(decodeURIComponent(safeOpt));
+  const q   = G.questions[G.current];
+  const ok  = opt.en===q.correct.en;
+  G.answered=ok; G.chosen=opt;
+  if(ok){ G.score++; G.streak++; if(G.streak>G.bestStreak) G.bestStreak=G.streak; }
+  else   { G.streak=0; }
+  // animate card
+  const card = document.getElementById('q-card');
+  if(card){ card.classList.add(ok?'correct-anim':'wrong-anim'); setTimeout(()=>card.classList.remove('correct-anim','wrong-anim'),400); }
+  render();
+}
+
+function next(){
+  if(G.current+1>=TOTAL_Q) G.phase='result';
+  else { G.current++; G.answered=null; G.chosen=null; }
+  render();
+}
+
+/* ── Result ───────────────────────────────────────────────── */
+function stars(s){ if(s===10)return'⭐⭐⭐'; if(s>=7)return'⭐⭐'; if(s>=4)return'⭐'; return''; }
+function msg(s){
+  if(s===10) return'Perfeito! Nota 10! Você é demais! 🏆';
+  if(s>=8)   return'Excelente! Continue assim! 🎉';
+  if(s>=6)   return'Muito bom! Quase lá! 👏';
+  if(s>=4)   return'Bom esforço! Vamos praticar mais! 💪';
+  return       'Vamos tentar de novo! Você consegue! 🌱';
+}
+function badges(){
+  const b=[];
+  if(G.score===10)  b.push({cls:'gold',  txt:'Nota 10 ⭐'});
+  if(G.score>=7)    b.push({cls:'green', txt:'Aprovado ✓'});
+  if(G.bestStreak>=3) b.push({cls:'gold',txt:'Sequência '+G.bestStreak+'x 🔥'});
+  if(G.mode==='colors')  b.push({cls:'green',txt:'Colorista 🎨'});
+  if(G.mode==='numbers') b.push({cls:'green',txt:'Numeralista 🔢'});
+  if(G.mode==='mixed')   b.push({cls:'green',txt:'Multidesafio 🌀'});
+  if(G.score<4) b.push({cls:'gray',txt:'Continue praticando 📚'});
+  return b.map(x=>`<span class="badge ${x.cls}">${x.txt}</span>`).join('');
+}
+
+function renderResult(){
+  return `
+    <div class="result-screen">
+      <div class="result-trophy">${G.score===10?'🏆':G.score>=7?'🎉':'📚'}</div>
+      <h2>${msg(G.score)}</h2>
+      <div class="result-score-big">${G.score}<span>/${TOTAL_Q}</span></div>
+      <div class="star-row">${stars(G.score)||'&nbsp;'}</div>
+      <div class="badge-row">${badges()}</div>
+      <div class="result-actions">
+        <button class="btn-primary" onclick="initGame('${G.mode}')">🔄 Jogar de novo</button>
+        <button class="btn-outline" onclick="showModeSelect()">🎯 Mudar modo</button>
+      </div>
+    </div>`;
+}
+
+function showModeSelect(){
+  document.getElementById('game-area').innerHTML=`
+    <div class="result-screen">
+      <h2 style="margin-bottom:20px">Escolha o modo de jogo</h2>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <button class="btn-primary" onclick="initGame('colors')">🎨 Somente Cores</button>
+        <button class="btn-primary" onclick="initGame('numbers')">🔢 Somente Numerais</button>
+        <button class="btn-primary" onclick="initGame('mixed')">🌀 Modo Misto</button>
+      </div>
+    </div>`;
+}
+
+/* ── Particle Background ──────────────────────────────────── */
+(function(){
+  const canvas = document.getElementById('particles-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, particles=[];
+
+  function resize(){ W=canvas.width=window.innerWidth; H=canvas.height=window.innerHeight; }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const COUNT = 28;
+  const CHARS = ['A','B','C','1','2','3','☆','✓'];
+  const GREENS = ['#3a9e5033','#2a7a3b22','#5cc27422','#c9a22718'];
+
+  for(let i=0;i<COUNT;i++){
+    particles.push({
+      x:Math.random()*window.innerWidth,
+      y:Math.random()*window.innerHeight,
+      char: CHARS[Math.floor(Math.random()*CHARS.length)],
+      color: GREENS[Math.floor(Math.random()*GREENS.length)],
+      size: 14+Math.random()*20,
+      vx: (Math.random()-.5)*.3,
+      vy: -.2-Math.random()*.3,
+      alpha:Math.random()*.6+.2,
+    });
+  }
+
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{
+      ctx.save();
+      ctx.globalAlpha=p.alpha;
+      ctx.fillStyle=p.color;
+      ctx.font=`bold ${p.size}px Montserrat,sans-serif`;
+      ctx.fillText(p.char, p.x, p.y);
+      ctx.restore();
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.y<-40){ p.y=H+20; p.x=Math.random()*W; }
+    });
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ── Boot ─────────────────────────────────────────────────── */
+initGame('mixed');
+</script>
+</body>
+</html>
